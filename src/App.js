@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-import './App.css';
+import classesApp from './App.module.css'; //In name css add 'module'
 //import Radium ,{StyleRoot}from 'radium';
-
-import Person from './Person/Person.js'
-
+//npm run eject -----using css modules,view config and scripts folder
+import Person from './Person/Person.js';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 class App extends Component {
   state = {
     persons: [
@@ -42,33 +42,36 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-     /* ':hover': {//Radi ako imamo Radium
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }*/
-    }
-    let persons = null;
+    /* const style = {
+       backgroundColor: 'green',
+       color: 'white',
+       font: 'inherit',
+       border: '1px solid blue',
+       padding: '8px',
+       cursor: 'pointer',
+      /* ':hover': {//Radi ako imamo Radium
+         backgroundColor: 'lightgreen',
+         color: 'black'
+       }*/
+    // }
+
     // let classes=['red', 'bold'].join(' ');
-    let classes = [];
+    let assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red');
+      assignedClasses.push('red');
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold')
+      assignedClasses.push('bold')
     }
+
+    let btnClass = '';
+    let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
             //Index drugi argument i predstavlja index u nizu
-            return <Person
+            return <ErrorBoundary><Person
               click={this.deletePersonHandler.bind(this, index)}
               //   click={this.deletePersonHandler(index)}
               //Prethodni nacin ne prolazi jer this pokazuje na nesto drugo
@@ -78,26 +81,31 @@ class App extends Component {
               name={person.name}
               age={person.age}
               changed={(event) => this.nameChangedHandler(event, person.id)}//setuje se 
-            />
+            /></ErrorBoundary>
           })}
         </div>
       );
-      style.backgroundColor = 'Red';//dinamicka promjena stila
-     
-     /* style[':hover'] = { //Potreban Radium npm install --save radium(u projekt folderu)
-        backgroundColor: 'salmon',
-        color: 'black'
-      }*/
+      btnClass = classesApp.Red;
+      // style.backgroundColor = 'Red';//dinamicka promjena stila
 
+      /* style[':hover'] = { //Potreban Radium npm install --save radium(u projekt folderu)
+         backgroundColor: 'salmon',
+         color: 'black'
+       }*/
+       const rand=Math.random();
+       if(rand>0.3){
+        throw new Error('WTF');
+       }
     }
 
     return (
-    //  <StyleRoot> Radium
-      <div className="App">
+      //  <StyleRoot> Radium
+      <div className={classesApp.App}>
         <h1>{this.props.h1}</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
+        <p className={assignedClasses.join(' ')}>This is really working!</p>
         <button
-          style={style}//Dodavanje style
+          // style={style}//Dodavanje style
+          className={btnClass}
           onClick={this.togglePersonHandler}>Toggle Persons</button>
         {
           persons
