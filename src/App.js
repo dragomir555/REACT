@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
+//import Radium ,{StyleRoot}from 'radium';
 
 import Person from './Person/Person.js'
 
@@ -23,16 +24,16 @@ class App extends Component {
     this.setState({ persons: persons });
   }
 
-  nameChangedHandler = (event,id) => {
- const personIndex=this.state.persons.findIndex(p=>{
-   return p.id===id;
- });
- //const person=Object.assign({},this.state.persons[personIndex]);
-  const person={...this.state.persons[personIndex]};//Kreiranje novog objekta
-  person.name=event.target.value;
-  const persons=[...this.state.persons];
-  persons[personIndex]=person;
-  this.setState({persons:persons})
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+    //const person=Object.assign({},this.state.persons[personIndex]);
+    const person = { ...this.state.persons[personIndex] };//Kreiranje novog objekta
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+    this.setState({ persons: persons })
   }
 
   togglePersonHandler = () => {
@@ -42,13 +43,26 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'White',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+     /* ':hover': {//Radi ako imamo Radium
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }*/
     }
     let persons = null;
+    // let classes=['red', 'bold'].join(' ');
+    let classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold')
+    }
     if (this.state.showPersons) {
       persons = (
         <div>
@@ -63,16 +77,25 @@ class App extends Component {
               key={person.id}
               name={person.name}
               age={person.age}
-              changed={(event)=>this.nameChangedHandler(event,person.id)}//setuje se 
-               />
+              changed={(event) => this.nameChangedHandler(event, person.id)}//setuje se 
+            />
           })}
         </div>
       );
+      style.backgroundColor = 'Red';//dinamicka promjena stila
+     
+     /* style[':hover'] = { //Potreban Radium npm install --save radium(u projekt folderu)
+        backgroundColor: 'salmon',
+        color: 'black'
+      }*/
+
     }
+
     return (
+    //  <StyleRoot> Radium
       <div className="App">
-        <h1>Hello World</h1>
-        <p>This is really working!</p>
+        <h1>{this.props.h1}</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
         <button
           style={style}//Dodavanje style
           onClick={this.togglePersonHandler}>Toggle Persons</button>
@@ -80,10 +103,13 @@ class App extends Component {
           persons
         }
       </div>
+      //</StyleRoot> Radium
     );
     //Kod ispod ne koristimo jer ce biti komplikovan onaj gore se kod prevodi u donji
     //  return React.createElement('div',{className: 'App'},React.createElement('h1',null,'Ovo je h1'));
+
   }
 }
 
+//export default Radium(App);// media Queries and selector Radium
 export default App;
