@@ -1,2 +1,0 @@
-"Status" 
-Nova linija
