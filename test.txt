@@ -1,4 +1,4 @@
-"File u test"
+"File u test" 
 cdsfdsfsd
 df
 sdf
@@ -10,9 +10,7 @@ dsf
 dg
 <div>
 </div>
-<input></input>
-dasdasdasddsadsa
-dasdasdasdasdasd
-
 Promjene u testu
-PERICAAAAA
+dsadsadsad
+
+Nesto veliko
