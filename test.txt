@@ -1,6 +1,4 @@
-"File u test" 
-Nema promjena
-
+"File u test"
 cdsfdsfsd
 df
 sdf
@@ -15,3 +13,5 @@ dg
 <input></input>
 dasdasdasddsadsa
 dasdasdasdasdasd
+
+Promjene u testu
